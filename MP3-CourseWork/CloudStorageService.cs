@@ -14,7 +14,7 @@ namespace MP3CourseWork
 
             CloudQueueClient queueClient = storageAccount.CreateCloudQueueClient();
 
-            CloudQueue sampleQueue = queueClient.GetQueueReference("thumbnailmaker");
+            CloudQueue sampleQueue = queueClient.GetQueueReference("mp3maker");
             sampleQueue.CreateIfNotExists();
 
             Trace.TraceInformation("Queue initialized");

@@ -19,9 +19,9 @@ namespace MP3_WebJob
         // "{queueTrigger}" is an inbuilt variable taking on value of contents of message automatically;
         // the other variables are valued automatically.
         public static void GenerateThumbnail(
-        [QueueTrigger("thumbnailmaker")] String blobInfo,
-        [Blob("photogallery/music/{queueTrigger}")] CloudBlockBlob inputBlob,
-        [Blob("photogallery/thumbnails/{queueTrigger}")] CloudBlockBlob outputBlob, TextWriter logger)
+        [QueueTrigger("mp3maker")] String blobInfo,
+        [Blob("musicstore/audio/{queueTrigger}")] CloudBlockBlob inputBlob,
+        [Blob("musicstore/thumbnails/{queueTrigger}")] CloudBlockBlob outputBlob, TextWriter logger)
         {
             //use log.WriteLine() rather than Console.WriteLine() for trace output
             logger.WriteLine("GenerateThumbnail() started...");
@@ -32,7 +32,7 @@ namespace MP3_WebJob
             using (Stream input = inputBlob.OpenRead())
             using (Stream output = outputBlob.OpenWrite())
             {
-                createSample(input, output, 20);
+                mp3Sample(input, output, 20);
                 outputBlob.Properties.ContentType = "audio/mpeg3";
                 outputBlob.Metadata["Title"] = inputBlob.Metadata["Title"];
             }
@@ -40,14 +40,14 @@ namespace MP3_WebJob
         }
 
         // Create thumbnail - the detail is unimportant but notice formal parameter types.
-        private static void createSample(Stream input, Stream output, int duration)
+        private static void mp3Sample(Stream input, Stream output, int duration)
         {
             using (var reader = new Mp3FileReader(input, wave => new NLayer.NAudioSupport.Mp3FrameDecompressor(wave)))
             {
                 Mp3Frame frame;
                 frame = reader.ReadNextFrame();
                 int frameTimeLength = (int)(frame.SampleCount / (double)frame.SampleRate * 1000.0);
-                int framesRequired = (int)(duration / (double)frameTimeLength * 20000.0);
+                int framesRequired = (int)(duration / (double)frameTimeLength * 1000.0);
 
                 int frameNumber = 0;
                 while ((frame = reader.ReadNextFrame()) != null)

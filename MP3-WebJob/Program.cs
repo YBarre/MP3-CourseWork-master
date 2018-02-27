@@ -24,6 +24,7 @@ namespace MP3_WebJob
             config.Queues.MaxPollingInterval = TimeSpan.FromSeconds(5);
 
             var host = new JobHost(config);
+      
 
             // The following code ensures that the WebJob will be running continuously.
 

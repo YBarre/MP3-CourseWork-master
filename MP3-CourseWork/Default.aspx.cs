@@ -14,7 +14,7 @@ namespace MP3CourseWork
         private BlobStorageService _blobStorageService = new BlobStorageService();
         private CloudQueueService _queueStorageService = new CloudQueueService();
 
-        private CloudBlobContainer getPhotoGalleryContainer()
+        private CloudBlobContainer getMusicStoreContainer()
         {
             return _blobStorageService.getCloudBlobContainer();
         }
@@ -33,7 +33,7 @@ namespace MP3CourseWork
                 Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(ext);
                 if (key != null)
                 {
-                    string contentType = key.GetValue("Content Type") as String;
+                    string contentType = key.GetValue("Title") as String;
                     if (!String.IsNullOrEmpty(contentType))
                     {
                         return contentType;
@@ -63,9 +63,9 @@ namespace MP3CourseWork
 
                 // Go to the container, instantiate a new blob
                 // with the descriptive name
-                String path = "music/" + name;
+                String path = "audio/" + name;
 
-                var blob = getPhotoGalleryContainer().GetBlockBlobReference(path);
+                var blob = getMusicStoreContainer().GetBlockBlobReference(path);
 
                 // The blob properties object (the label on the bucket)
                 // contains an entry for MIME type. Set that property.
@@ -76,7 +76,7 @@ namespace MP3CourseWork
                 blob.Metadata["Title"] = upload.FileName;
                 blob.UploadFromStream(upload.FileContent);
 
-               blob.SetMetadata();
+                blob.SetMetadata();
 
         
 
@@ -101,7 +101,7 @@ namespace MP3CourseWork
                 // blobs whose name begins with the string "thumbnails". 
                 // It returns an enumerator of their URLs. 
                 // Place that enumerator into list view as its data source. 
-                ThumbnailDisplayControl.DataSource = from o in getPhotoGalleryContainer().GetDirectoryReference("thumbnails").ListBlobs()
+                ThumbnailDisplayControl.DataSource = from o in getMusicStoreContainer().GetDirectoryReference("Title").ListBlobs()
                                                      select new { Url = o.Uri };
 
                 // Tell the list view to bind to its data source, thereby
