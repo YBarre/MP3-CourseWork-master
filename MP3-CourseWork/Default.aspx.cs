@@ -73,7 +73,12 @@ namespace MP3CourseWork
 
                 // Actually upload the data to the
                 // newly instantiated blob
+                blob.Metadata["Title"] = upload.FileName;
                 blob.UploadFromStream(upload.FileContent);
+
+               blob.SetMetadata();
+
+        
 
                 // Place a message in the queue to tell the worker
                 // role that a new photo blob exists, which will 
@@ -107,5 +112,16 @@ namespace MP3CourseWork
             {
             }
         }
+
+
+        private String getTitle(CloudBlockBlob blob)
+        {
+ 
+          
+            blob.FetchAttributes();
+
+            return blob.Metadata["Title"];
+        }
+   
     }
 }

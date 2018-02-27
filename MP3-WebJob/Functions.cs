@@ -33,7 +33,8 @@ namespace MP3_WebJob
             using (Stream output = outputBlob.OpenWrite())
             {
                 createSample(input, output, 20);
-                outputBlob.Properties.ContentType = "music/mp3";
+                outputBlob.Properties.ContentType = "audio/mpeg3";
+                outputBlob.Metadata["Title"] = inputBlob.Metadata["Title"];
             }
             logger.WriteLine("GenerateThumbnail() completed...");
         }
