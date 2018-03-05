@@ -14,7 +14,7 @@ namespace MP3CourseWork
         private BlobStorageService _blobStorageService = new BlobStorageService();
         private CloudQueueService _queueStorageService = new CloudQueueService();
 
-        private CloudBlobContainer getMusicStoreContainer()
+        private CloudBlobContainer getPhotoGalleryContainer()
         {
             return _blobStorageService.getCloudBlobContainer();
         }
@@ -65,7 +65,7 @@ namespace MP3CourseWork
                 // with the descriptive name
                 String path = "audio/" + name;
 
-                var blob = getMusicStoreContainer().GetBlockBlobReference(path);
+                var blob = getPhotoGalleryContainer().GetBlockBlobReference(path);
 
                 // The blob properties object (the label on the bucket)
                 // contains an entry for MIME type. Set that property.
@@ -101,8 +101,8 @@ namespace MP3CourseWork
                 // blobs whose name begins with the string "thumbnails". 
                 // It returns an enumerator of their URLs. 
                 // Place that enumerator into list view as its data source. 
-                ThumbnailDisplayControl.DataSource = from o in getMusicStoreContainer().GetDirectoryReference("Title").ListBlobs()
-                                                     select new { Url = o.Uri };
+                ThumbnailDisplayControl.DataSource = from o in getPhotoGalleryContainer().GetDirectoryReference("audio").ListBlobs()
+                                                     select new { Url = o.Uri , Title = getTitle(new CloudBlockBlob(o.Uri))};
 
                 // Tell the list view to bind to its data source, thereby
                 // showing 

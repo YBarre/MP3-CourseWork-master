@@ -20,8 +20,8 @@ namespace MP3_WebJob
         // the other variables are valued automatically.
         public static void GenerateThumbnail(
         [QueueTrigger("mp3maker")] String blobInfo,
-        [Blob("musicstore/audio/{queueTrigger}")] CloudBlockBlob inputBlob,
-        [Blob("musicstore/thumbnails/{queueTrigger}")] CloudBlockBlob outputBlob, TextWriter logger)
+        [Blob("photogallery/audio/{queueTrigger}")] CloudBlockBlob inputBlob,
+        [Blob("photogallery/audio/{queueTrigger}")] CloudBlockBlob outputBlob, TextWriter logger)
         {
             //use log.WriteLine() rather than Console.WriteLine() for trace output
             logger.WriteLine("GenerateThumbnail() started...");
@@ -35,6 +35,7 @@ namespace MP3_WebJob
                 mp3Sample(input, output, 20);
                 outputBlob.Properties.ContentType = "audio/mpeg3";
                 outputBlob.Metadata["Title"] = inputBlob.Metadata["Title"];
+
             }
             logger.WriteLine("GenerateThumbnail() completed...");
         }

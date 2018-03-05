@@ -14,7 +14,7 @@ namespace MP3CourseWork
 
             CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
 
-            CloudBlobContainer blobContainer = blobClient.GetContainerReference("musicstore");
+            CloudBlobContainer blobContainer = blobClient.GetContainerReference("photogallery");
             if (blobContainer.CreateIfNotExists())
             {
                 // Enable public access on the newly created "photogallery" container.
