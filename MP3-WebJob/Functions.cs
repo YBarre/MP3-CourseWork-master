@@ -20,8 +20,8 @@ namespace MP3_WebJob
         // the other variables are valued automatically.
         public static void GenerateThumbnail(
         [QueueTrigger("mp3maker")] String blobInfo,
-        [Blob("photogallery/audio/{queueTrigger}")] CloudBlockBlob inputBlob,
-        [Blob("photogallery/audio/{queueTrigger}")] CloudBlockBlob outputBlob, TextWriter logger)
+        [Blob("musicstore/audio/{queueTrigger}")] CloudBlockBlob inputBlob,
+        [Blob("musicstore/audio/{queueTrigger}")] CloudBlockBlob outputBlob, TextWriter logger)
         {
             //use log.WriteLine() rather than Console.WriteLine() for trace output
             logger.WriteLine("GenerateThumbnail() started...");
