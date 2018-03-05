@@ -21,7 +21,7 @@ namespace MP3_WebJob
         public static void GenerateThumbnail(
         [QueueTrigger("mp3maker")] String blobInfo,
         [Blob("musicstore/audio/{queueTrigger}")] CloudBlockBlob inputBlob,
-        [Blob("musicstore/croppedAudio/{queueTrigger}")] CloudBlockBlob outputBlob, TextWriter logger)
+        [Blob("musicstore/thumbnails/{queueTrigger}")] CloudBlockBlob outputBlob, TextWriter logger)
         {
             //use log.WriteLine() rather than Console.WriteLine() for trace output
             logger.WriteLine("GenerateThumbnail() started...");

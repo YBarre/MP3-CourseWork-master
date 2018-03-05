@@ -101,8 +101,8 @@ namespace MP3CourseWork
                 // blobs whose name begins with the string "thumbnails". 
                 // It returns an enumerator of their URLs. 
                 // Place that enumerator into list view as its data source. 
-                ThumbnailDisplayControl.DataSource = from o in getMusicStoreContainer().GetDirectoryReference("croppedAudio").ListBlobs()
-                                                     select new { Url = o.Uri , Title = getTitle(new CloudBlockBlob(o.Uri))};
+                ThumbnailDisplayControl.DataSource = from o in getMusicStoreContainer().GetDirectoryReference("thumbnails").ListBlobs()
+                                                     select new { Url = o.Uri , Title = getMp3Title(new CloudBlockBlob(o.Uri))};
 
                 // Tell the list view to bind to its data source, thereby
                 // showing 
@@ -114,12 +114,9 @@ namespace MP3CourseWork
         }
 
 
-        private String getTitle(CloudBlockBlob blob)
+        private String getMp3Title(CloudBlockBlob blob)
         {
- 
-          
             blob.FetchAttributes();
-
             return blob.Metadata["Title"];
         }
    

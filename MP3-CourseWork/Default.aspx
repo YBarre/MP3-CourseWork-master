@@ -26,7 +26,7 @@
                             <asp:Literal ID="label" Text='<%# Eval("Title") %>' runat="server"/>
                         </ItemTemplate>
                     </asp:ListView>
-                    <asp:Timer ID="timer1" runat="server" Interval="20000" />
+                    <asp:Timer ID="timer1" runat="server" Interval="10000" />
                 </ContentTemplate>
             </asp:UpdatePanel>
         </div>
