@@ -114,6 +114,7 @@
     </Content>
     <Content Include="ClassDiagram1.cd" />
     <Content Include="Properties\webjobs-list.json" />
+    <None Include="Properties\PublishProfiles\MP3-Coursework - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

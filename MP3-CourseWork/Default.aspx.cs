@@ -90,6 +90,11 @@ namespace MP3CourseWork
             }
         }
 
+        private String getMp3Title(CloudBlockBlob blob)
+        {
+            blob.FetchAttributes();
+            return blob.Metadata["Title"];
+        }
         // rerun every timer click - set by timer control on aspx page to be every 1000ms
         protected void Page_PreRender(object sender, EventArgs e)
         {
@@ -101,7 +106,7 @@ namespace MP3CourseWork
                 // blobs whose name begins with the string "thumbnails". 
                 // It returns an enumerator of their URLs. 
                 // Place that enumerator into list view as its data source. 
-                ThumbnailDisplayControl.DataSource = from o in getMusicStoreContainer().GetDirectoryReference("thumbnails").ListBlobs()
+                ThumbnailDisplayControl.DataSource = from o in getMusicStoreContainer().GetDirectoryReference("audioSample").ListBlobs()
                                                      select new { Url = o.Uri , Title = getMp3Title(new CloudBlockBlob(o.Uri))};
 
                 // Tell the list view to bind to its data source, thereby
@@ -111,13 +116,6 @@ namespace MP3CourseWork
             catch (Exception)
             {
             }
-        }
-
-
-        private String getMp3Title(CloudBlockBlob blob)
-        {
-            blob.FetchAttributes();
-            return blob.Metadata["Title"];
         }
    
     }
